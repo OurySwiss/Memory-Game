@@ -1,5 +1,5 @@
 <template>
-  <h1>NEX-18 Memory-Game</h1>
+  <h1>Memory-Game</h1>
   <section class="game-board">
     <card
       v-for="(card, index) in cardList"
