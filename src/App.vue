@@ -34,7 +34,7 @@ export default {
     });
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
-        value: 10,
+        value: i,
         visible: false,
         position: i,
         matched: false,
