@@ -12,7 +12,6 @@
     />
   </section>
   <h2>{{ status }}</h2>
-  <p>Verbleibende Paare: {{ remainingPairs }}</p>
 </template>
 <script>
 import Card from "./components/Card.vue";
@@ -25,7 +24,13 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
-    const status = ref("");
+    const status = computed(() => {
+      if (remainingPairs.value === 0) {
+        return "Spieler gewinnt";
+      } else {
+        return `Verbleibende Paare: ${remainingPairs.value}`;
+      }
+    });
     const remainingPairs = computed(() => {
       const remainingCards = cardList.value.filter(
         (card) => card.matched === false
@@ -34,7 +39,7 @@ export default {
     });
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
-        value: i,
+        value: 0,
         visible: false,
         position: i,
         matched: false,
@@ -73,7 +78,6 @@ export default {
       flipCard,
       userSelection,
       status,
-      remainingPairs,
     };
   },
 };
