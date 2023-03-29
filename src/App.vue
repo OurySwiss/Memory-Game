@@ -12,7 +12,7 @@
     />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="shuffleCards">Karten mischen</button>
+  <button @click="restartGame">Neu starten</button>
 </template>
 <script>
 import _ from "lodash";
@@ -42,6 +42,17 @@ export default {
     const shuffleCards = () => {
       cardList.value = _.shuffle(cardList.value);
     };
+    const restartGame = () => {
+      shuffleCards();
+      cardList.value = cardList.value.map((card, index) => {
+        return {
+          ...card,
+          matched: false,
+          position: index,
+          visible: false,
+        };
+      });
+    };
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
         value: i,
@@ -57,11 +68,9 @@ export default {
           const cardOne = currentValue[0];
           const cardTwo = currentValue[1];
           if (cardOne.faceValue === cardTwo.faceValue) {
-            status.value = "Paar!";
             cardList.value[cardOne.position].matched = true;
             cardList.value[cardTwo.position].matched = true;
           } else {
-            status.value = "Kein Paar!";
             cardList.value[cardOne.position].visible = false;
             cardList.value[cardTwo.position].visible = false;
           }
@@ -84,7 +93,17 @@ export default {
       userSelection,
       status,
       shuffleCards,
+      restartGame,
     };
+  },
+  async create() {
+    const resposne = await fetch(
+      "https://memory-api.dev-scapp.swisscom.com/cards"
+    );
+    const responseFromApi = await resposne.json();
+    const eightCards = responseFromApi.slice(0, 8);
+    const allCards = JSON.parse(JSON.stringify([...eightCards, ...eightCards]));
+    this.cards = allCards;
   },
 };
 </script>
