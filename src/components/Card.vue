@@ -3,11 +3,12 @@
 <template>
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      <img :src="value.id" alt="value.title" />
+      <img :src="value.url" :alt="value.title" />
     </div>
     <div v-else class="card-face is-back">Back</div>
   </div>
 </template>
+
 <script>
 export default {
   props: {
@@ -32,7 +33,7 @@ export default {
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
-        faceValue: props.value,
+        faceValue: props.value.title,
       });
     };
     return {
@@ -41,6 +42,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .card {
   border: 5px solid #ccc;
