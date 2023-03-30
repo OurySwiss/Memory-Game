@@ -16,8 +16,9 @@
 </template>
 <script>
 import _ from "lodash";
+import axios from "axios";
 import Card from "./components/Card.vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 export default {
   name: "App",
   components: {
@@ -53,7 +54,7 @@ export default {
         };
       });
     };
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+    const cardItems = [];
     cardItems.forEach((item) => {
       cardList.value.push({
         value: item,
@@ -108,6 +109,37 @@ export default {
         userSelection.value[0] = payload;
       }
     };
+    const generateImageUrl = (id, title) => {
+      return `https://memory-api.dev-scapp.swisscom.com/cards/${id}/${title}.jpg`;
+    };
+
+    const loadCards = async () => {
+      const response = await axios.get(
+        "https://memory-api.dev-scapp.swisscom.com/cards"
+      );
+      const responseFromApi = response.data;
+      const eightCards = responseFromApi.slice(0, 8);
+      const allCards = JSON.parse(
+        JSON.stringify([...eightCards, ...eightCards])
+      );
+
+      allCards.forEach((card, index) => {
+        cardList.value.push({
+          value: {
+            url: generateImageUrl(card.id, card.title),
+            title: card.title,
+          },
+          visible: false,
+          position: index,
+          matched: false,
+        });
+      });
+
+      shuffleCards();
+    };
+    onMounted(() => {
+      loadCards();
+    });
     return {
       cardList,
       flipCard,
@@ -116,15 +148,6 @@ export default {
       shuffleCards,
       restartGame,
     };
-  },
-  async create() {
-    const resposne = await fetch(
-      "https://memory-api.dev-scapp.swisscom.com/cards"
-    );
-    const responseFromApi = await resposne.json();
-    const eightCards = responseFromApi.slice(0, 8);
-    const allCards = JSON.parse(JSON.stringify([...eightCards, ...eightCards]));
-    this.cards = allCards;
   },
 };
 </script>

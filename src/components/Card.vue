@@ -3,7 +3,7 @@
 <template>
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      {{ value }} - {{ position }}
+      <img :src="value.id" alt="value.title" />
     </div>
     <div v-else class="card-face is-back">Back</div>
   </div>
@@ -20,7 +20,7 @@ export default {
       required: true,
     },
     value: {
-      type: Number,
+      type: Object,
       required: true,
     },
     visible: {
