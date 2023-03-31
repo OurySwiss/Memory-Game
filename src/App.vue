@@ -12,7 +12,7 @@
     />
   </section>
   <h2 class="status">{{ status }}</h2>
-  <button @click="restartGame">Neu starten</button>
+  <button class="restart-button" @click="restartGame">Neu starten</button>
 </template>
 <script>
 import _ from "lodash";
@@ -155,5 +155,12 @@ export default {
 }
 .title {
   color: white;
+}
+.restart-button {
+  background-color: blue;
+  color: white;
+  padding: 1rem 0.6rem;
+  border: 5px solid #ccc;
+  border-radius: 10px;
 }
 </style>

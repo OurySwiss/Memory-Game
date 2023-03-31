@@ -4,7 +4,7 @@
     <div v-if="visible" class="card-face is-front">
       <img :src="value.url" :alt="value.title" />
     </div>
-    <div v-else class="card-face is-back">Back</div>
+    <div v-else class="card-face is-back"></div>
   </div>
 </template>
 
@@ -56,6 +56,7 @@ export default {
   position: relative;
   transition: 0.5s transform ease-in;
   transform-style: preserve-3d;
+  color: white;
 }
 
 .card.is-flipped {
@@ -65,6 +66,7 @@ export default {
 .card-face.is-front {
   background-color: red;
   color: white;
+  text-decoration: none;
 }
 
 .card-face.is-back {
