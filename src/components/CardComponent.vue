@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="card" :class="flippedStyles" @click="selectCard">
     <div v-if="visible" class="card-face is-front">

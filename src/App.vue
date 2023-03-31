@@ -17,7 +17,7 @@
 <script>
 import _ from "lodash";
 import axios from "axios";
-import Card from "./components/Card.vue";
+import Card from "./components/CardComponent.vue";
 import { computed, ref, watch, onMounted } from "vue";
 
 export default {
