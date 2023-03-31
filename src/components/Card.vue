@@ -51,6 +51,14 @@ export default {
 </script>
 
 <style>
+.game-board {
+  display: grid;
+  grid-template-columns: 100px 100px 100px 100px;
+  grid-template-rows: 100px 100px 100px 100px;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  justify-content: center;
+}
 .card {
   border: 5px solid #ccc;
   position: relative;
@@ -67,6 +75,7 @@ export default {
   background-color: red;
   color: white;
   text-decoration: none;
+  transform: rotateY(180deg);
 }
 
 .card-face.is-back {
@@ -78,14 +87,5 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
-}
-
-.game-board {
-  display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
-  justify-content: center;
 }
 </style>
