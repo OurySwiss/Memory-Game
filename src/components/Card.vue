@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<!-- eslint-disable no-undef -->
 <template>
-  <div class="card" @click="selectCard">
+  <div class="card" :class="flippedStyles" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
       <img :src="value.url" :alt="value.title" />
     </div>
@@ -10,6 +9,7 @@
 </template>
 
 <script>
+import { computed } from "vue";
 export default {
   props: {
     matched: {
@@ -30,6 +30,12 @@ export default {
     },
   },
   setup(props, context) {
+    // eslint-disable-next-line vue/return-in-computed-property
+    const flippedStyles = computed(() => {
+      if (props.visible) {
+        return "is-flipped";
+      }
+    });
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
@@ -38,6 +44,7 @@ export default {
     };
     return {
       selectCard,
+      flippedStyles,
     };
   },
 };
@@ -47,6 +54,12 @@ export default {
 .card {
   border: 5px solid #ccc;
   position: relative;
+  transition: 0.5s transform ease-in;
+  transform-style: preserve-3d;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
 }
 
 .card-face.is-front {

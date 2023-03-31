@@ -1,5 +1,5 @@
 <template>
-  <h1>Memory-Game</h1>
+  <h1 class="title">Memory-Game</h1>
   <section class="game-board">
     <card
       v-for="(card, index) in cardList"
@@ -11,7 +11,7 @@
       @select-card="flipCard"
     />
   </section>
-  <h2>{{ status }}</h2>
+  <h2 class="status">{{ status }}</h2>
   <button @click="restartGame">Neu starten</button>
 </template>
 <script>
@@ -19,6 +19,7 @@ import _ from "lodash";
 import axios from "axios";
 import Card from "./components/Card.vue";
 import { computed, ref, watch, onMounted } from "vue";
+
 export default {
   name: "App",
   components: {
@@ -27,6 +28,65 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
+
+    const methods = {
+      shuffleCards() {
+        cardList.value = _.shuffle(cardList.value);
+      },
+      restartGame() {
+        methods.shuffleCards();
+        cardList.value = cardList.value.map((card, index) => {
+          return {
+            ...card,
+            matched: false,
+            position: index,
+            visible: false,
+          };
+        });
+      },
+      flipCard(payload) {
+        cardList.value[payload.position].visible = true;
+        if (userSelection.value[0]) {
+          if (
+            userSelection.value[0].position === payload.position &&
+            userSelection.value[0].faceValue === payload.faceValue
+          ) {
+            return;
+          }
+          userSelection.value[1] = payload;
+        } else {
+          userSelection.value[0] = payload;
+        }
+      },
+      generateImageUrl(id, title) {
+        return `https://memory-api.dev-scapp.swisscom.com/cards/${id}/${title}.jpg`;
+      },
+      async loadCards() {
+        const response = await axios.get(
+          "https://memory-api.dev-scapp.swisscom.com/cards"
+        );
+        const responseFromApi = response.data;
+        const eightCards = responseFromApi.slice(0, 8);
+        const allCards = JSON.parse(
+          JSON.stringify([...eightCards, ...eightCards])
+        );
+
+        allCards.forEach((card, index) => {
+          cardList.value.push({
+            value: {
+              url: methods.generateImageUrl(card.id, card.title),
+              title: card.title,
+            },
+            visible: false,
+            position: index,
+            matched: false,
+          });
+        });
+
+        methods.shuffleCards();
+      },
+    };
+
     const status = computed(() => {
       if (remainingPairs.value === 0) {
         return "Spieler gewinnt";
@@ -34,47 +94,14 @@ export default {
         return `Verbleibende Paare: ${remainingPairs.value}`;
       }
     });
+
     const remainingPairs = computed(() => {
       const remainingCards = cardList.value.filter(
         (card) => card.matched === false
       ).length;
       return remainingCards / 2;
     });
-    const shuffleCards = () => {
-      cardList.value = _.shuffle(cardList.value);
-    };
-    const restartGame = () => {
-      shuffleCards();
-      cardList.value = cardList.value.map((card, index) => {
-        return {
-          ...card,
-          matched: false,
-          position: index,
-          visible: false,
-        };
-      });
-    };
-    const cardItems = [];
-    cardItems.forEach((item) => {
-      cardList.value.push({
-        value: item,
-        visible: false,
-        position: null,
-        matched: false,
-      });
-      cardList.value.push({
-        value: item,
-        visible: false,
-        position: null,
-        matched: false,
-      });
-    });
-    cardList.value = cardList.value.map((card, index) => {
-      return {
-        ...card,
-        position: index,
-      };
-    });
+
     watch(
       userSelection,
       (currentValue) => {
@@ -95,58 +122,17 @@ export default {
       },
       { deep: true }
     );
-    const flipCard = (payload) => {
-      cardList.value[payload.position].visible = true;
-      if (userSelection.value[0]) {
-        if (
-          userSelection.value[0].position === payload.position &&
-          userSelection.value[0].faceValue === payload.faceValue
-        ) {
-          return;
-        }
-        userSelection.value[1] = payload;
-      } else {
-        userSelection.value[0] = payload;
-      }
-    };
-    const generateImageUrl = (id, title) => {
-      return `https://memory-api.dev-scapp.swisscom.com/cards/${id}/${title}.jpg`;
-    };
 
-    const loadCards = async () => {
-      const response = await axios.get(
-        "https://memory-api.dev-scapp.swisscom.com/cards"
-      );
-      const responseFromApi = response.data;
-      const eightCards = responseFromApi.slice(0, 8);
-      const allCards = JSON.parse(
-        JSON.stringify([...eightCards, ...eightCards])
-      );
-
-      allCards.forEach((card, index) => {
-        cardList.value.push({
-          value: {
-            url: generateImageUrl(card.id, card.title),
-            title: card.title,
-          },
-          visible: false,
-          position: index,
-          matched: false,
-        });
-      });
-
-      shuffleCards();
-    };
     onMounted(() => {
-      loadCards();
+      methods.loadCards();
     });
+
     return {
       cardList,
-      flipCard,
+      flipCard: methods.flipCard,
       userSelection,
       status,
-      shuffleCards,
-      restartGame,
+      restartGame: methods.restartGame,
     };
   },
 };
@@ -159,5 +145,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+* {
+  background-color: black;
+  background-size: cover;
+}
+.status {
+  color: white;
+}
+.title {
+  color: white;
 }
 </style>
