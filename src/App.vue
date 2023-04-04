@@ -18,7 +18,7 @@
 import _ from "lodash";
 import axios from "axios";
 import Card from "./components/CardComponent.vue";
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, watch, onMounted, reactive, readonly } from "vue";
 
 export default {
   name: "App",
@@ -26,16 +26,18 @@ export default {
     Card,
   },
   setup() {
-    const cardList = ref([]);
-    const userSelection = ref([]);
+    const cardList = reactive([]);
+    const userSelection = reactive([]);
 
     const methods = {
       shuffleCards() {
-        cardList.value = _.shuffle(cardList.value);
+        const shuffledCards = _.shuffle(cardList);
+        cardList.length = 0;
+        cardList.push(...shuffledCards);
       },
       restartGame() {
         methods.shuffleCards();
-        cardList.value = cardList.value.map((card, index) => {
+        const updatedCards = cardList.map((card, index) => {
           return {
             ...card,
             matched: false,
@@ -43,19 +45,21 @@ export default {
             visible: false,
           };
         });
+        cardList.length = 0;
+        cardList.push(...updatedCards);
       },
       flipCard(payload) {
-        cardList.value[payload.position].visible = true;
-        if (userSelection.value[0]) {
+        cardList[payload.position].visible = true;
+        if (userSelection[0]) {
           if (
-            userSelection.value[0].position === payload.position &&
-            userSelection.value[0].faceValue === payload.faceValue
+            userSelection[0].position === payload.position &&
+            userSelection[0].faceValue === payload.faceValue
           ) {
             return;
           }
-          userSelection.value[1] = payload;
+          userSelection[1] = payload;
         } else {
-          userSelection.value[0] = payload;
+          userSelection[0] = payload;
         }
       },
       generateImageUrl(id, title) {
@@ -72,7 +76,7 @@ export default {
         );
 
         allCards.forEach((card, index) => {
-          cardList.value.push({
+          cardList.push({
             value: {
               url: methods.generateImageUrl(card.id, card.title),
               title: card.title,
@@ -96,28 +100,28 @@ export default {
     });
 
     const remainingPairs = computed(() => {
-      const remainingCards = cardList.value.filter(
+      const remainingCards = cardList.filter(
         (card) => card.matched === false
       ).length;
       return remainingCards / 2;
     });
 
     watch(
-      userSelection,
+      () => userSelection.slice(),
       (currentValue) => {
         if (currentValue.length === 2) {
           const cardOne = currentValue[0];
           const cardTwo = currentValue[1];
           if (cardOne.faceValue === cardTwo.faceValue) {
-            cardList.value[cardOne.position].matched = true;
-            cardList.value[cardTwo.position].matched = true;
+            cardList[cardOne.position].matched = true;
+            cardList[cardTwo.position].matched = true;
           } else {
             setTimeout(() => {
-              cardList.value[cardOne.position].visible = false;
-              cardList.value[cardTwo.position].visible = false;
+              cardList[cardOne.position].visible = false;
+              cardList[cardTwo.position].visible = false;
             }, 2000);
           }
-          userSelection.value.length = 0;
+          userSelection.length = 0;
         }
       },
       { deep: true }
@@ -128,9 +132,9 @@ export default {
     });
 
     return {
-      cardList,
+      cardList: readonly(cardList),
       flipCard: methods.flipCard,
-      userSelection,
+      userSelection: readonly(userSelection),
       status,
       restartGame: methods.restartGame,
     };
