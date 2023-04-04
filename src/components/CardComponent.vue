@@ -1,7 +1,7 @@
 <template>
   <div class="card" :class="flippedStyles" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      <img :src="value.url" :alt="value.title" />
+      <img class="card-image" :src="value.url" :alt="value.title" />
     </div>
     <div v-else class="card-face is-back"></div>
   </div>
@@ -59,7 +59,6 @@ export default {
   justify-content: center;
 }
 .card {
-  border: 5px solid #ccc;
   position: relative;
   transition: 0.5s transform ease-in;
   transform-style: preserve-3d;
@@ -71,15 +70,20 @@ export default {
 }
 
 .card-face.is-front {
-  background-color: red;
-  color: white;
   text-decoration: none;
   transform: rotateY(180deg);
+  align-items: center;
+}
+
+.card-image {
+  width: 100px;
+  height: 100px;
 }
 
 .card-face.is-back {
   background-color: blue;
   color: white;
+  border: 5px solid #ccc;
 }
 
 .card-face {

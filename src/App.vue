@@ -62,9 +62,6 @@ export default {
           userSelection[0] = payload;
         }
       },
-      generateImageUrl(id, title) {
-        return `https://memory-api.dev-scapp.swisscom.com/cards/${id}/${title}.jpg`;
-      },
       async loadCards() {
         const response = await axios.get(
           "https://memory-api.dev-scapp.swisscom.com/cards"
@@ -78,7 +75,7 @@ export default {
         allCards.forEach((card, index) => {
           cardList.push({
             value: {
-              url: methods.generateImageUrl(card.id, card.title),
+              url: card.url,
               title: card.title,
             },
             visible: false,
