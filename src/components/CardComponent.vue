@@ -29,12 +29,13 @@ export default {
     },
   },
   setup(props, context) {
-    // eslint-disable-next-line vue/return-in-computed-property
     const flippedStyles = computed(() => {
       if (props.visible) {
         return "is-flipped";
       }
+      return null;
     });
+
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
