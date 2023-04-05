@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { computed } from "vue";
 export default {
   props: {
     matched: {
@@ -28,24 +27,21 @@ export default {
       default: false,
     },
   },
-  setup(props, context) {
-    const flippedStyles = computed(() => {
-      if (props.visible) {
-        return "is-flipped";
+  methods: {
+    selectCard() {
+      this.$emit('select-card', {
+        position: this.position,
+        faceValue: this.value.title,
+      });
+    },
+  },
+  computed: {
+    flippedStyles() {
+      if (this.visible) {
+        return 'is-flipped';
       }
       return null;
-    });
-
-    const selectCard = () => {
-      context.emit("select-card", {
-        position: props.position,
-        faceValue: props.value.title,
-      });
-    };
-    return {
-      selectCard,
-      flippedStyles,
-    };
+    },
   },
 };
 </script>
@@ -59,6 +55,7 @@ export default {
   grid-row-gap: 30px;
   justify-content: center;
 }
+
 .card {
   position: relative;
   transition: 0.5s transform ease-in;
