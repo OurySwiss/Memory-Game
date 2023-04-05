@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import MemoryGameView from '@/views/MemoryGameView.vue';
+import { createRouter, createWebHashHistory } from "vue-router";
+import MemoryGameView from "@/views/MemoryGameView.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'MemoryGameView',
+    path: "/",
+    name: "MemoryGameView",
     component: MemoryGameView,
   },
 ];

@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     selectCard() {
-      this.$emit('select-card', {
+      this.$emit("select-card", {
         position: this.position,
         faceValue: this.value.title,
       });
@@ -38,7 +38,7 @@ export default {
   computed: {
     flippedStyles() {
       if (this.visible) {
-        return 'is-flipped';
+        return "is-flipped";
       }
       return null;
     },
