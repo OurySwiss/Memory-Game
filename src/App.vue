@@ -147,7 +147,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-* {
+/* {
   background-color: black;
   background-size: cover;
 }
@@ -156,11 +156,11 @@ export default {
 }
 .title {
   color: white;
-}
+}*/
 .restart-button {
   background-color: blue;
   color: white;
-  padding: 1rem 0.6rem;
+  padding: 0.7rem 0.6rem;
   border: 5px solid #ccc;
   border-radius: 10px;
 }
