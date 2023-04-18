@@ -18,14 +18,4 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-/* {
-  background-color: black;
-  background-size: cover;
-}
-.status {
-  color: white;
-}
-.title {
-  color: white;
-}*/
 </style>

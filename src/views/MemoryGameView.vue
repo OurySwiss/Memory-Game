@@ -131,7 +131,7 @@ export default {
 
 <style>
 .restart-button {
-  background-color: blue;
+  background-color: rgb(0, 0, 255);
   color: white;
   padding: 0.7rem 0.6rem;
   border: 5px solid #ccc;
