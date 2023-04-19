@@ -3,7 +3,7 @@ import MemoryGameView from '@/views/MemoryGameView/MemoryGameView.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/game',
     name: 'MemoryGameView',
     component: MemoryGameView,
   },
