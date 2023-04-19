@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import MemoryGameView from '@/views/MemoryGameView.vue';
+import MemoryGameView from '@/views/MemoryGameView/MemoryGameView.vue';
 
 const routes = [
   {

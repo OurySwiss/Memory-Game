@@ -1,22 +1,4 @@
-<template>
-  <div>
-    <section class="game-board">
-      <card
-        v-for="(card, index) in cardList"
-        :key="`card-${index}`"
-        :matched="card.matched"
-        :value="card.value"
-        :visible="card.visible"
-        :position="index"
-        @select-card="flipCard"
-      />
-    </section>
-    <h2 class="status">{{ status }}</h2>
-    <button class="restart-button" @click="restartGame">Neu starten</button>
-  </div>
-</template>
-<script>
-import Card from '@/components/CardComponent.vue';
+import Card from '@/components/CardComponent/CardComponent.vue';
 import axios from 'axios';
 
 export default {
@@ -127,14 +109,3 @@ export default {
     this.loadCards();
   },
 };
-</script>
-
-<style>
-.restart-button {
-  background-color: rgb(0, 0, 255);
-  color: white;
-  padding: 0.7rem 0.6rem;
-  border: 5px solid #ccc;
-  border-radius: 10px;
-}
-</style>
