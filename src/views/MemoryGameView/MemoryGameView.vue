@@ -4,7 +4,6 @@
       <card
         v-for="(card, index) in cardList"
         :key="`card-${index}`"
-        :matched="card.matched"
         :value="card.value"
         :visible="card.visible"
         :position="index"
