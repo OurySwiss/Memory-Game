@@ -27,13 +27,19 @@ export default {
     },
   },
   methods: {
-    shuffleCards() {
-      const shuffledCards = [...this.cardList];
+    shuffleCards(cards) {
+      const targetCards = cards || this.cardList;
+      const shuffledCards = [...targetCards];
       shuffledCards.sort(() => {
         return 0.5 - Math.random();
       });
-      this.cardList = shuffledCards;
+      if (cards) {
+        return shuffledCards;
+      } else {
+        this.cardList = shuffledCards;
+      }
     },
+
     restartGame() {
       this.shuffleCards();
       const updatedCards = this.cardList.map((card, index) => {
@@ -61,30 +67,29 @@ export default {
       }
     },
     async loadCards() {
-  const { data: responseFromApi } = await axios.get(
-    'https://memory-api.dev-scapp.swisscom.com/cards'
-  );
+      const { data: responseFromApi } = await axios.get(
+        'https://memory-api.dev-scapp.swisscom.com/cards'
+      );
 
-  const shuffledCards = this.shuffleCards(responseFromApi);
-  const eightCards = shuffledCards.slice(0, 8);
-  const allCards = JSON.parse(
-    JSON.stringify([...eightCards, ...eightCards])
-  );
-  allCards.map((card, index) => {
-    this.cardList.push({
-      value: {
-        url: card.url,
-        title: card.title,
-      },
-      visible: false,
-      position: index,
-      matched: false,
-    });
-  });
+      const shuffledResponse = this.shuffleCards(responseFromApi);
+      const eightCards = shuffledResponse.slice(0, 8);
+      const allCards = JSON.parse(
+        JSON.stringify([...eightCards, ...eightCards])
+      );
+      allCards.map((card, index) => {
+        this.cardList.push({
+          value: {
+            url: card.url,
+            title: card.title,
+          },
+          visible: false,
+          position: index,
+          matched: false,
+        });
+      });
 
-  this.shuffleCards(allCards);
-},
-
+      this.shuffleCards();
+    },
   },
   watch: {
     userSelection: {
