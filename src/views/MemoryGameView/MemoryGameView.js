@@ -76,17 +76,16 @@ export default {
       const allCards = JSON.parse(
         JSON.stringify([...eightCards, ...eightCards])
       );
-      allCards.map((card, index) => {
-        this.cardList.push({
-          value: {
-            url: card.url,
-            title: card.title,
-          },
-          visible: false,
-          position: index,
-          matched: false,
-        });
-      });
+
+      this.cardList = allCards.map((card, index) => ({
+        value: {
+          url: card.url,
+          title: card.title,
+        },
+        visible: false,
+        position: index,
+        matched: false,
+      }));
 
       this.shuffleCards();
     },
