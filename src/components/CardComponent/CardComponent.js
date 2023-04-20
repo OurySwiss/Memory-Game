@@ -1,9 +1,5 @@
 export default {
   props: {
-    matched: {
-      type: Boolean,
-      default: false,
-    },
     position: {
       type: Number,
       required: true,

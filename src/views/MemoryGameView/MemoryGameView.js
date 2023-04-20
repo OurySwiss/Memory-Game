@@ -21,7 +21,7 @@ export default {
     },
     remainingPairs() {
       const remainingCards = this.cardList.filter(
-        (card) => card.matched === false
+        (card) => !card.matched
       ).length;
       return remainingCards / 2;
     },
@@ -69,7 +69,7 @@ export default {
       const allCards = JSON.parse(
         JSON.stringify([...eightCards, ...eightCards])
       );
-      allCards.forEach((card, index) => {
+      allCards.map((card, index) => {
         this.cardList.push({
           value: {
             url: card.url,
