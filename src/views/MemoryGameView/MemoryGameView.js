@@ -61,28 +61,30 @@ export default {
       }
     },
     async loadCards() {
-      const response = await axios.get(
-        'https://memory-api.dev-scapp.swisscom.com/cards'
-      );
-      const responseFromApi = response.data;
-      const eightCards = responseFromApi.slice(0, 8);
-      const allCards = JSON.parse(
-        JSON.stringify([...eightCards, ...eightCards])
-      );
-      allCards.map((card, index) => {
-        this.cardList.push({
-          value: {
-            url: card.url,
-            title: card.title,
-          },
-          visible: false,
-          position: index,
-          matched: false,
-        });
-      });
+  const { data: responseFromApi } = await axios.get(
+    'https://memory-api.dev-scapp.swisscom.com/cards'
+  );
 
-      this.shuffleCards();
-    },
+  const shuffledCards = this.shuffleCards(responseFromApi);
+  const eightCards = shuffledCards.slice(0, 8);
+  const allCards = JSON.parse(
+    JSON.stringify([...eightCards, ...eightCards])
+  );
+  allCards.map((card, index) => {
+    this.cardList.push({
+      value: {
+        url: card.url,
+        title: card.title,
+      },
+      visible: false,
+      position: index,
+      matched: false,
+    });
+  });
+
+  this.shuffleCards(allCards);
+},
+
   },
   watch: {
     userSelection: {
