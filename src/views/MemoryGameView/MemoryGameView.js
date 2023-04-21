@@ -9,16 +9,23 @@ export default {
     return {
       cardList: [],
       userSelection: [],
+      score: 0,
     };
   },
   computed: {
     status() {
-      if (this.remainingPairs === 0) {
-        return 'Spieler gewinnt';
+      if (this.remainingPairs === 0 && this.cardList.length > 0) {
+        let username = prompt('Bitte gib einen Benutzernamen ein:');
+        if (username) {
+          //alert(`Glückwunsch ${username}, du hast das Spiel gewonnen!`);
+        } else {
+          alert('Bitte gib einen gültigen Benutzernamen ein.');
+        }
       } else {
         return `Verbleibende Paare: ${this.remainingPairs}`;
       }
     },
+
     remainingPairs() {
       const remainingCards = this.cardList.filter(
         (card) => !card.matched
@@ -99,10 +106,14 @@ export default {
           if (cardOne.faceValue === cardTwo.faceValue) {
             this.cardList[cardOne.position].matched = true;
             this.cardList[cardTwo.position].matched = true;
+            this.score++;
+            console.log(this.score);
           } else {
             setTimeout(() => {
               this.cardList[cardOne.position].visible = false;
               this.cardList[cardTwo.position].visible = false;
+              this.score++;
+              console.log(this.score);
             }, 2000);
           }
           this.userSelection = [];

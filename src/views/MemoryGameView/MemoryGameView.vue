@@ -11,6 +11,7 @@
       />
     </section>
     <h2 class="status">{{ status }}</h2>
+    <h2>Versuche: {{ score }}</h2>
     <button class="restart-button" @click="restartGame">Neu starten</button>
   </div>
 </template>
