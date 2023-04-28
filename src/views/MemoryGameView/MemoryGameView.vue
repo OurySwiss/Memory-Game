@@ -19,7 +19,7 @@
             </div>
             <div class="modal-body">
               <slot name="body"
-                ><h3>You took {{ score }} tries.</h3>
+                ><h3>Du hast {{ score }} versuche gebraucht.</h3>
               </slot>
             </div>
             <div class="modal-footer">
