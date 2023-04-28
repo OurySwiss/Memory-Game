@@ -15,7 +15,7 @@
         <div class="modal-wrapper">
           <div class="modal-container">
             <div class="modal-header">
-              <slot name="header"><h1>Congrats!</h1></slot>
+              <slot name="header"><h1>Glückwunsch!</h1></slot>
             </div>
             <div class="modal-body">
               <slot name="body"
@@ -33,11 +33,7 @@
                     isNameValid ? 'Your Name' : 'Please enter a valid name'
                   "
                 />
-                <button
-                  id="button"
-                  class="button"
-                  @click="validateAndSubmitScore(name)"
-                >
+                <button id="button" class="button" @click="postData()">
                   OK
                 </button>
               </slot>
@@ -59,7 +55,6 @@
     </div> -->
     <h2 class="status">{{ status }}</h2>
     <h2>Versuche: {{ score }}</h2>
-    <button class="restart-button" @click="restartGame">Neu starten</button>
   </div>
 </template>
 <script src="./MemoryGameView"></script>

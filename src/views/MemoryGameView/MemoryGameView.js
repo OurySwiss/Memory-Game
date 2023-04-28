@@ -12,6 +12,7 @@ export default {
       score: 0,
       showModal: false,
       uncovered: 0,
+      userName: '',
     };
   },
   computed: {
@@ -94,6 +95,26 @@ export default {
 
       this.shuffleCards();
     },
+    async postData() {
+      const nameInput = document.getElementById('name-input');
+      const btn = document.getElementById('button');
+      btn.addEventListener('click', async () => {
+        const userName = nameInput.value;
+        this.userName = userName;
+        try {
+          const response = await axios.post(
+            'https://memory-api.dev-scapp.swisscom.com/scores',
+            {
+              userName: this.userName,
+              score: this.score,
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    },
   },
   watch: {
     userSelection: {
@@ -106,13 +127,11 @@ export default {
             this.cardList[cardTwo.position].matched = true;
             this.score++;
             this.uncovered++;
-            console.log(this.score);
           } else {
             setTimeout(() => {
               this.cardList[cardOne.position].visible = false;
               this.cardList[cardTwo.position].visible = false;
               this.score++;
-              console.log(this.score);
             }, 2000);
           }
           this.userSelection = [];

@@ -12,7 +12,13 @@
           </thead>
           <tbody>
             <tr v-for="(score, index) in getSortedScores()" :key="index">
-              <td class="rank">1.</td>
+              <td class="rank">
+                {{
+                  scores[index - 1] && scores[index - 1].score === score.score
+                    ? index
+                    : index + 1
+                }}.
+              </td>
               <td class="user">{{ score.userName }}</td>
               <td class="points">{{ score.score }}</td>
             </tr>
