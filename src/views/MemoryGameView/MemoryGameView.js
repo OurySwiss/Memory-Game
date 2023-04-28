@@ -10,17 +10,14 @@ export default {
       cardList: [],
       userSelection: [],
       score: 0,
+      showModal: false,
+      uncovered: 0,
     };
   },
   computed: {
     status() {
-      if (this.remainingPairs === 0 && this.cardList.length > 0) {
-        let username = prompt('Bitte gib einen Benutzernamen ein:');
-        if (username) {
-          //alert(`Glückwunsch ${username}, du hast das Spiel gewonnen!`);
-        } else {
-          alert('Bitte gib einen gültigen Benutzernamen ein.');
-        }
+      if (this.remainingPairs === 0) {
+        this.showModal == true;
       } else {
         return `Verbleibende Paare: ${this.remainingPairs}`;
       }
@@ -55,6 +52,7 @@ export default {
           matched: false,
           position: index,
           visible: false,
+          score: 0,
         };
       });
       this.cardList = updatedCards;
@@ -107,6 +105,7 @@ export default {
             this.cardList[cardOne.position].matched = true;
             this.cardList[cardTwo.position].matched = true;
             this.score++;
+            this.uncovered++;
             console.log(this.score);
           } else {
             setTimeout(() => {

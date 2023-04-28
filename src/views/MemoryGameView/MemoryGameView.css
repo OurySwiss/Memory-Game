@@ -5,3 +5,63 @@
   border: 5px solid #ccc;
   border-radius: 10px;
 }
+/* Popup */
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  color: #39367c;
+}
+.modal-container {
+  width: 500px;
+  height: 200px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+}
+.modal-header h3 {
+  margin-top: 0;
+  color: black;
+}
+.modal-body {
+  font-weight: bold;
+  margin: 20px 0;
+}
+.submitScoreModal-default-button {
+  float: center;
+}
+.submitScoreModal-enter-from {
+  opacity: 0;
+}
+.submitScoreModal-leave-to {
+  opacity: 0;
+}
+.button {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+.name-input {
+  border-color: #39367c;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+.submitScoreModal-enter-from .submitScoreModal-container,
+.submitScoreModal-leave-to .submitScoreModal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+} /* Popup */
