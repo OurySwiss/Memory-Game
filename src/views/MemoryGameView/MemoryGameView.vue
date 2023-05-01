@@ -42,17 +42,6 @@
         </div>
       </div>
     </Transition>
-
-    <!-- Modal
-    <div class="modal" v-if="showModal">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-        <h3>Modal Title</h3>
-        <p>Modal content goes here...</p>
-        <button @click="toggleModal">Scoreboard</button>
-        <button @click="toggleModal">Nochmal Spielen</button>
-      </div>
-    </div> -->
     <h2 class="status">{{ status }}</h2>
     <h2>Versuche: {{ score }}</h2>
   </div>
