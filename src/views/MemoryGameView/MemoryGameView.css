@@ -1,7 +1,7 @@
 /* Popup */
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -34,16 +34,16 @@
   font-weight: bold;
   margin: 20px 0;
 }
-.submitScoreModal-default-button {
+.submit-Score-Modal-default-button {
   float: center;
 }
-.submitScoreModal-enter-from {
+.submit-Score-Modal-enter-from {
   opacity: 0;
 }
-.submitScoreModal-leave-to {
+.submit-Score-Modal-leave-to {
   opacity: 0;
 }
-.button {
+.submit-button {
   background-color: #e9c46a;
   padding: 10px;
   border-radius: 12px;
@@ -52,7 +52,7 @@
   font-weight: bold;
   transition: background-color 0.3s ease;
 }
-.button:hover {
+.submit-button:hover {
   background-color: #d4a641;
 }
 .name-input {
@@ -61,8 +61,8 @@
   margin-right: 10px;
   border-radius: 12px;
 }
-.submitScoreModal-enter-from .submitScoreModal-container,
-.submitScoreModal-leave-to .submitScoreModal-container {
+.submit-Score-Modal-enter-from .submit-Score-Modal-container,
+.submit-Score-Modal-leave-to .submit-Score-Modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }

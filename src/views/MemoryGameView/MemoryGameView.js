@@ -18,7 +18,7 @@ export default {
   computed: {
     status() {
       if (this.remainingPairs === 0) {
-        this.showModal == true;
+        this.showModal = true;
       } else {
         return `Verbleibende Paare: ${this.remainingPairs}`;
       }
@@ -103,27 +103,23 @@ export default {
       this.shuffleCards();
     },
     async postData() {
-      const nameInput = document.getElementById('name-input');
-      const btn = document.getElementById('button');
-      btn.addEventListener('click', async () => {
-        const userName = nameInput.value;
-        this.userName = userName;
-        try {
-          const response = await axios.post(
-            'https://memory-api.dev-scapp.swisscom.com/scores',
-            {
-              userName: this.userName,
-              score: this.score,
-            }
-          );
-          console.log(response);
-          setTimeout(() => {
-            this.$router.push('/scoreboard');
-          }, 2000);
-        } catch (error) {
-          console.error(error);
-        }
-      });
+      const userName = this.$refs.nameInput.value;
+      this.userName = userName;
+      try {
+        const response = await axios.post(
+          'https://memory-api.dev-scapp.swisscom.com/scores',
+          {
+            userName: this.userName,
+            score: this.score,
+          }
+        );
+        console.log(response);
+        setTimeout(() => {
+          this.$router.push('/scoreboard');
+        }, 2000);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   watch: {

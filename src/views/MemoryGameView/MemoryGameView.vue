@@ -10,7 +10,7 @@
         @select-card="flipCard"
       />
     </section>
-    <Transition name="submitScoreModal">
+    <Transition name="submit-Score-Modal">
       <div v-if="uncovered === 8" class="modal-mask">
         <div class="modal-wrapper">
           <div class="modal-container">
@@ -25,7 +25,7 @@
             <div class="modal-footer">
               <slot name="footer">
                 <input
-                  id="name-input"
+                  ref="nameInput"
                   :class="`name-input ${isNameValid ? '' : 'red-border'}`"
                   type="text"
                   v-model="name"
@@ -33,9 +33,7 @@
                     isNameValid ? 'Your Name' : 'Please enter a valid name'
                   "
                 />
-                <button id="button" class="button" @click="postData()">
-                  OK
-                </button>
+                <button class="submit-button" @click="postData">OK</button>
               </slot>
             </div>
           </div>
@@ -46,5 +44,5 @@
     <h2>Versuche: {{ score }}</h2>
   </div>
 </template>
-<script src="./MemoryGameView"></script>
-<style src="./MemoryGameView.css"></style>
+<script src="@/views/MemoryGameView/MemoryGameView"></script>
+<style src="@/views/MemoryGameView/MemoryGameView.css"></style>
