@@ -59,6 +59,12 @@ export default {
       this.cardList = updatedCards;
     },
     flipCard(payload) {
+      const visibleCount = this.cardList.filter(
+        (card) => card.visible && !card.matched
+      ).length;
+      if (visibleCount >= 2) {
+        return;
+      }
       this.cardList[payload.position].visible = true;
       if (this.userSelection[0]) {
         if (
@@ -72,6 +78,7 @@ export default {
         this.userSelection[0] = payload;
       }
     },
+
     async loadCards() {
       const { data: responseFromApi } = await axios.get(
         'https://memory-api.dev-scapp.swisscom.com/cards'
