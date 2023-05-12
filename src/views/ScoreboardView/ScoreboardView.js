@@ -7,9 +7,6 @@ export default {
   async created() {
     this.scores = await this.loadScores();
   },
-  mounted() {
-    // After DOM content is loaded
-  },
   methods: {
     async loadScores() {
       try {
@@ -22,13 +19,19 @@ export default {
         return [];
       }
     },
-    myMethod(arr) {
-      arr.sort();
-      arr.reverse();
-      return arr;
-    },
+  },
+  computed: {
     getSortedScores() {
-      return this.scores.sort((a, b) => a.score - b.score);
+      const sortedScores = this.scores.sort((a, b) => a.score - b.score);
+      let currentRank = 0;
+      let previousScore = null;
+      return sortedScores.map((score, index) => {
+        if (score.score !== previousScore) {
+          currentRank = index + 1;
+          previousScore = score.score;
+        }
+        return { ...score, rank: currentRank };
+      });
     },
   },
 };

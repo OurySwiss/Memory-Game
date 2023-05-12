@@ -11,15 +11,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(score, index) in getSortedScores()" :key="index">
-              <td class="rank">
-                {{
-                  index > 0 &&
-                  getSortedScores()[index - 1].score === score.score
-                    ? currentRank
-                    : (currentRank = index + 1)
-                }}.
-              </td>
+            <tr v-for="score in getSortedScores" :key="score.rank">
+              <td class="rank">{{ score.rank }}.</td>
               <td class="user">{{ score.userName }}</td>
               <td class="points">{{ score.score }}</td>
             </tr>
@@ -29,5 +22,6 @@
     </div>
   </div>
 </template>
+
 <script src="./ScoreboardView"></script>
 <style src="./ScoreboardView.css"></style>

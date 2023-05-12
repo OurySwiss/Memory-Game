@@ -102,7 +102,7 @@ export default {
 
       this.shuffleCards();
     },
-    async postData() {
+    async postScore() {
       const userName = this.$refs.nameInput.value;
       this.userName = userName;
       try {

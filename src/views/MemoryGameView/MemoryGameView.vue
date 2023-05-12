@@ -33,7 +33,7 @@
                     isNameValid ? 'Your Name' : 'Please enter a valid name'
                   "
                 />
-                <button class="submit-button" @click="postData">OK</button>
+                <button class="submit-button" @click="postScore()">OK</button>
               </slot>
             </div>
           </div>
