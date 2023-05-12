@@ -110,6 +110,9 @@ export default {
             }
           );
           console.log(response);
+          setTimeout(() => {
+            this.$router.push('/scoreboard');
+          }, 2000);
         } catch (error) {
           console.error(error);
         }
