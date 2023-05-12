@@ -1,7 +1,68 @@
-.restart-button {
-  background-color: #001155;
-  color: white;
-  padding: 0.7rem 0.6rem;
-  border: 5px solid #ccc;
+/* Popup */
+.modal-mask {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  color: #264653;
+}
+.modal-container {
+  width: 500px;
+  height: 200px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #f1faee;
   border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.modal-header h3 {
+  margin-top: 0;
+  color: #264653;
+  font-weight: bold;
+}
+.modal-body {
+  font-weight: bold;
+  margin: 20px 0;
+}
+.submit-Score-Modal-default-button {
+  float: center;
+}
+.submit-Score-Modal-enter-from {
+  opacity: 0;
+}
+.submit-Score-Modal-leave-to {
+  opacity: 0;
+}
+.submit-button {
+  background-color: #e9c46a;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  color: #264653;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.submit-button:hover {
+  background-color: #d4a641;
+}
+.name-input {
+  border-color: #264653;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 12px;
+}
+.submit-Score-Modal-enter-from .submit-Score-Modal-container,
+.submit-Score-Modal-leave-to .submit-Score-Modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
