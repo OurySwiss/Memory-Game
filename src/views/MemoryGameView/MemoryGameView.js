@@ -11,6 +11,13 @@ export default {
       userSelection: [],
       score: 0,
       showModal: false,
+      showStartModal: true,
+      difficultyLevel: 'easy', // default level
+      timeLimit: null,
+      remainingTime: null,
+      timerInterval: null,
+      maxAttempts: Infinity,
+      showGameOverModal: false,
       uncovered: 0,
       userName: '',
     };
@@ -32,6 +39,50 @@ export default {
     },
   },
   methods: {
+    setDifficulty(difficulty) {
+      this.showStartModal = false;
+      this.difficultyLevel = difficulty;
+
+      switch (difficulty) {
+        case 'medium':
+          this.timeLimit = 1.5 * 60;
+          this.remainingTime = this.timeLimit;
+          this.maxAttempts = 20;
+          this.startTimer();
+          break;
+        case 'hard':
+          this.timeLimit = 1.5 * 30;
+          this.remainingTime = this.timeLimit;
+          this.maxAttempts = 12;
+          this.startTimer();
+          break;
+        default: // Leicht
+          this.timeLimit = null;
+          this.maxAttempts = Infinity;
+      }
+    },
+    startTimer() {
+      if (this.timeLimit) {
+        this.timerInterval = setInterval(() => {
+          this.remainingTime--;
+
+          if (this.remainingTime <= 0) {
+            // Die Zeit ist abgelaufen - beenden Sie das Spiel oder zeigen Sie eine Nachricht an
+            clearInterval(this.timerInterval);
+            this.showGameOverModal = true;
+          }
+        }, 1000);
+      }
+    },
+    beforeDestroy() {
+      clearInterval(this.timerInterval);
+    },
+    goToGame() {
+      this.$router.go(0);
+    },
+    goToScoreboard() {
+      this.$router.push('/scoreboard');
+    },
     shuffleCards(cards) {
       const targetCards = cards || this.cardList;
       const shuffledCards = [...targetCards];
@@ -76,6 +127,10 @@ export default {
         this.userSelection[1] = payload;
       } else {
         this.userSelection[0] = payload;
+      }
+      if (this.score >= this.maxAttempts) {
+        clearInterval(this.timerInterval);
+        this.showGameOverModal = true;
       }
     },
 
@@ -138,7 +193,7 @@ export default {
               this.cardList[cardOne.position].visible = false;
               this.cardList[cardTwo.position].visible = false;
               this.score++;
-            }, 2000);
+            }, 1000);
           }
           this.userSelection = [];
         }
